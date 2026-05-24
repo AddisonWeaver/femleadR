@@ -16,4 +16,131 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(femleadR)
+library(ggplot2)
+library(dplyr)
+olympic_data <- load_data()
+```
+
+
+
+```{r}
+
+olympic_data|>
+  group_by(year) |>
+  summarize(n_monarchies = sum(is_monarchy, na.rm = TRUE)) |>
+  ggplot(aes(x = year, y = n_monarchies)) +
+  geom_line() +
+  labs(title = "Number of Monarchies Over Time",
+       x = "Year", y = "Count")
+```
+```{r}
+olympic_data |>
+  count(regime_category) |>
+  ggplot(aes(x = reorder(regime_category, n), y = n)) +
+  geom_col() +
+  coord_flip() +
+  labs(title = "Count by Regime Type", x = "Regime", y = "Count")
+```
+
+```{r}
+olympic_data|>
+  group_by(year) |>
+  summarize(n_democracies = sum(is_democracy, na.rm = TRUE)) |>
+  ggplot(aes(x = year, y = n_democracies)) +
+  geom_line() +
+  labs(title = "Number of Democracies Over Time")
+```
+```{r}
+#' Summarize Regime Types by Year
+#'
+#' Returns a summary table counting the number of each 
+#' regime type per year.
+#'
+#' @param data A dataframe from \code{load_data()}
+#' @param min_year Minimum year to filter by. Default is NULL (all years).
+#' @param max_year Maximum year to filter by. Default is NULL (all years).
+#'
+#' @return A tibble with columns: year, regime_category, count
+#' @importFrom dplyr filter group_by summarize n
+#' @export
+
+summarize_regimes <- function(olympic_data, min_year = NULL, max_year = NULL) {
+  
+  if (!is.null(min_year)) olympic_data <- dplyr::filter(olympic_data, year >= min_year)
+  if (!is.null(max_year)) olympic_data <- dplyr::filter(olympic_data, year <= max_year)
+  
+  olympic_data |>
+    dplyr::group_by(year, regime_category) |>
+    dplyr::summarize(count = dplyr::n(), .groups = "drop")
+}
+```
+
+
+```{r}
+#' Plot Monarchies vs Democracies Over Time
+#'
+#' Creates a line plot comparing the number of monarchies 
+#' and democracies over time.
+#'
+#' @param data A dataframe from \code{load_data()}
+#' @param min_year Minimum year to include. Default is NULL (all years).
+#'
+#' @return A ggplot object
+#' @importFrom dplyr filter group_by summarize
+#' @importFrom tidyr pivot_longer
+#' @importFrom ggplot2 ggplot aes geom_line labs
+#' @export
+plot_regimes <- function(olympic_data, min_year = NULL) {
+  
+  if (!is.null(min_year)) olympic_data <- dplyr::filter(olympic_data, year >= min_year)
+  
+  olympic_data |>
+    dplyr::group_by(year) |>
+    dplyr::summarize(
+      monarchies = sum(is_monarchy, na.rm = TRUE),
+      democracies = sum(is_democracy, na.rm = TRUE),
+      .groups = "drop"
+    ) |>
+    tidyr::pivot_longer(cols = c(monarchies, democracies),
+                        names_to = "type",
+                        values_to = "count") |>
+    ggplot2::ggplot(ggplot2::aes(x = year, y = count, color = type)) +
+    ggplot2::geom_line() +
+    ggplot2::labs(
+      title = "Monarchies vs Democracies Over Time",
+      x = "Year",
+      y = "Count",
+      color = "Regime Type"
+    )
+}
+```
+
+```{r}
+#' Summarize Regime Changes by Year
+#'
+#' Returns a summary table counting the number of countries
+#' that switched regime categories compared to the previous year.
+#'
+#' @param data A dataframe from \code{load_data()}
+#' @param min_year Minimum year to filter by. Default is NULL (all years).
+#' @param max_year Maximum year to filter by. Default is NULL (all years).
+#'
+#' @return A tibble with columns: year, n_changes
+#' @importFrom dplyr filter group_by arrange mutate summarize n
+#' @export
+summarize_regime_changes <- function(data, min_year = NULL, max_year = NULL) {
+
+  if (!is.null(min_year)) data <- dplyr::filter(data, year >= min_year)
+  if (!is.null(max_year)) data <- dplyr::filter(data, year <= max_year)
+
+  data |>
+    dplyr::arrange(country_name, year) |>
+    dplyr::group_by(country_name) |>
+    dplyr::mutate(regime_changed = regime_category != dplyr::lag(regime_category)) |>
+    dplyr::group_by(year) |>
+    dplyr::summarize(
+      n_changes = sum(regime_changed, na.rm = TRUE),
+      .groups = "drop"
+    )
+}
 ```
