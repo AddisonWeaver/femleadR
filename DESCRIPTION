@@ -18,4 +18,5 @@ Imports:
 Suggests: 
     knitr,
     rmarkdown
-    
+URL: https://github.com/SophiaWoodard/femleadR
+BugReports: https://github.com/SophiaWoodard/femleadR/issues
