@@ -1,0 +1,21 @@
+Package: femleadR
+Title: Tools for Analyzing Female Leadership Data
+Version: 0.0.0.9000
+Authors@R: c(
+    person("Sophia", "Woodard", email = "smwoodar@calpoly.edu", role = c("aut", "cre")),
+    person("Addison", "Weaver", email = "aweave10@calpoly.edu", role = "aut"),
+    person("Scarlet", "Kwan", email = "skwan02@calpoly.edu", role = "aut"))
+Description: Provides functions to streamline the analysis of how female world
+    leaders impact GDP, unemployment, and other economic factors. Includes
+    tools for generating relevant visualizations and summary tables, reducing
+    repetitive code across analyses.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 8.0.0
+Imports: 
+    readr
+Suggests: 
+    knitr,
+    rmarkdown
+    
