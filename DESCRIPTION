@@ -14,9 +14,14 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 8.0.0
 Imports: 
-    readr
+    dplyr,
+    ggplot2,
+    readr,
+    tidyr
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    testthat (>= 3.0.0)
 URL: https://github.com/SophiaWoodard/femleadR
 BugReports: https://github.com/SophiaWoodard/femleadR/issues
+Config/testthat/edition: 3
