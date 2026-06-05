@@ -9,9 +9,9 @@ filter_years(data, min_year = NULL, max_year = NULL)
 \arguments{
 \item{data}{A data frame containing a \code{year} column.}
 
-\item{min_year}{Minimum year to keep. Default is NULL (no lower bound).}
+\item{min_year}{Minimum year to keep (1950–2020). Default is NULL (no lower bound).}
 
-\item{max_year}{Maximum year to keep. Default is NULL (no upper bound).}
+\item{max_year}{Maximum year to keep (1950–2020). Default is NULL (no upper bound).}
 }
 \value{
 A filtered data frame.

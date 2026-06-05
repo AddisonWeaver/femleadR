@@ -4,8 +4,8 @@
 #' regime type per year.
 #'
 #' @param data A dataframe from \code{load_data()}
-#' @param min_year Minimum year to filter by. Default is NULL (all years).
-#' @param max_year Maximum year to filter by. Default is NULL (all years).
+#' @param min_year Minimum year to filter by (1950–2020). Default is NULL (no lower bound).
+#' @param max_year Maximum year to filter by (1950–2020). Default is NULL (no upper bound).
 #'
 #' @return A tibble with columns: year, regime_category, count
 #' @importFrom dplyr filter group_by summarize n

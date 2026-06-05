@@ -4,12 +4,14 @@
 \alias{plot_regimes}
 \title{Plot Monarchies vs Democracies Over Time}
 \usage{
-plot_regimes(data, min_year = NULL)
+plot_regimes(data, min_year = NULL, max_year = NULL)
 }
 \arguments{
 \item{data}{A dataframe from \code{load_data()}}
 
-\item{min_year}{Minimum year to include. Default is NULL (all years).}
+\item{min_year}{Minimum year to include (1950–2020). Default is NULL (no lower bound).}
+
+\item{max_year}{Maximum year to include (1950–2020). Default is NULL (no upper bound).}
 }
 \value{
 A ggplot object
@@ -17,4 +19,12 @@ A ggplot object
 \description{
 Creates a line plot comparing the number of monarchies
 and democracies over time.
+}
+\examples{
+\donttest{
+  dat <- load_data()
+  plot_regimes(dat)
+  plot_regimes(dat, min_year = 1990)
+  plot_regimes(dat, min_year = 1990, max_year = 2010)
+}
 }
