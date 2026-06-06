@@ -12,14 +12,6 @@
 #' @importFrom tidyr pivot_longer
 #' @importFrom ggplot2 ggplot aes geom_line labs
 #' @export
-#'
-#' @examples
-#' \donttest{
-#'   dat <- load_data()
-#'   plot_regimes(dat)
-#'   plot_regimes(dat, min_year = 1990)
-#'   plot_regimes(dat, min_year = 1990, max_year = 2010)
-#' }
 plot_regimes <- function(data, min_year = NULL, max_year = NULL) {
   if (!is.data.frame(data)) stop("`data` must be a data frame.")
   data <- filter_years(data, min_year = min_year, max_year = max_year)

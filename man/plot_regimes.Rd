@@ -20,11 +20,3 @@ A ggplot object
 Creates a line plot comparing the number of monarchies
 and democracies over time.
 }
-\examples{
-\donttest{
-  dat <- load_data()
-  plot_regimes(dat)
-  plot_regimes(dat, min_year = 1990)
-  plot_regimes(dat, min_year = 1990, max_year = 2010)
-}
-}
