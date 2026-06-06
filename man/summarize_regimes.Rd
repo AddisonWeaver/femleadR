@@ -7,16 +7,16 @@
 summarize_regimes(data, min_year = NULL, max_year = NULL)
 }
 \arguments{
-\item{data}{A dataframe from \code{load_data()}}
+\item{data}{A data frame from \code{load_data()}.}
 
 \item{min_year}{Minimum year to filter by (1950–2020). Default is NULL (no lower bound).}
 
 \item{max_year}{Maximum year to filter by (1950–2020). Default is NULL (no upper bound).}
 }
 \value{
-A tibble with columns: year, regime_category, count
+A tibble with columns: year, regime_category, count.
 }
 \description{
 Returns a summary table counting the number of each
-regime type per year.
+regime type per year. Uses \code{data.table} for efficient aggregation.
 }

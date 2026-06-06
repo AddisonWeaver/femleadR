@@ -10,8 +10,5 @@ load_data()
 A tibble containing the female leadership data.
 }
 \description{
-Loads the raw dataset directly from the TidyTuesday GitHub repository.
-}
-\examples{
-dat <- load_data()
+Loads the democracy and female leadership dataset bundled with the package.
 }

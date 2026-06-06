@@ -1,0 +1,96 @@
+---
+title: "Introduction to femleadR"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to femleadR}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Overview
+
+`femleadR` provides tools for exploring democracy, regime, and female leadership data across 192 countries from 1950 to 2020.
+
+## Loading the Data
+
+```{r}
+library(femleadR)
+
+democracy_data <- load_data()
+gdp_data <- load_gdp_data()
+```
+
+## Data Cleaning
+
+`clean_democracy()` filters the GDP dataset to only rows where a female leader was recorded, removing missing values in key columns.
+
+```{r}
+female_leader_data <- clean_democracy(gdp_data)
+head(female_leader_data)
+```
+
+## Plotting Regime Types Over Time
+
+`plot_regimes()` creates a line plot comparing the count of monarchies and democracies per year.
+
+```{r}
+plot_regimes(democracy_data)
+```
+
+## Summarizing Regime Types by Year
+
+`summarize_regimes()` returns a count of countries in each regime category per year.
+
+```{r}
+summarize_regimes(democracy_data, min_year = 2000)
+```
+
+## Top Countries by Female Leadership
+
+`summarize_female_leaders()` returns the top countries with the most years of female national leadership and their average GDP.
+
+```{r}
+summarize_female_leaders(gdp_data, n = 10)
+```
+
+## Plotting Female Leadership
+
+`plot_female_leaders()` creates a bar plot of the top countries by years of female national leadership.
+
+```{r}
+plot_female_leaders(gdp_data, n = 10)
+```
+
+## Statistical Analysis
+
+`model_female_gdp()` fits a linear regression of log(GDP) on female leadership status.
+
+```{r}
+model <- model_female_gdp(gdp_data)
+summary(model)
+```
+
+## Unemployment by Regime Type
+
+`summarize_unemployment()` returns a summary table of average unemployment rates 
+by regime type for a given year.
+
+```{r}
+unemp_data <- load_unemployment_data()
+
+summarize_unemployment(unemp_data, year_filter = 2019)
+```
+
+`plot_unemployment()` creates a boxplot of unemployment rates across political 
+regime types for a given year.
+
+```{r}
+plot_unemployment(unemp_data, year_filter = 2019)
+```
